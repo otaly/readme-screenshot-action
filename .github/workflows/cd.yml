@@ -1,0 +1,45 @@
+name: CD
+
+on: push
+
+jobs:
+  bundle:
+    name: Bundle
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+
+      - name: Set up node cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install
+        run: npm ci
+
+      - name: Format & Lint
+        run: npm run check:write
+
+      - name: Bundle
+        run: npm run bundle
+
+      - name: Set tag name
+        id: tag-name
+        run: echo "tag=$(cat package.json | jq -r .version)" >> $GITHUB_OUTPUT
+
+      - name: Commit
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Apply format, lint, and bundle
+          tagging_message: ${{ steps.tag-name.outputs.tag }}

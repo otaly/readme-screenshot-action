@@ -1,0 +1,27 @@
+{
+  "name": "hello-world-typescript-action",
+  "version": "v1.0.1",
+  "description": "サンプルの JavaScript アクション。",
+  "main": "dist/index.js",
+  "scripts": {
+    "bundle": "npm run check:write && npm run package",
+    "package": "npx ncc build src/index.ts -o dist --source-map --license licenses.txt",
+    "package:watch": "npm run package -- --watch",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "check": "npx @biomejs/biome check .",
+    "check:write": "npx @biomejs/biome check --write ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@actions/core": "^1.10.1",
+    "@actions/github": "^6.0.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.8.3",
+    "@types/node": "^22.0.0",
+    "@vercel/ncc": "^0.38.1",
+    "typescript": "^5.5.4"
+  }
+}
