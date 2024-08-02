@@ -1,0 +1,13 @@
+name: Run Action
+
+on: workflow_dispatch
+
+jobs:
+  run:
+    name: Run
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: otaly/readme-screenshot-action@v1.0.0
+        with:
+          url: https://developer.chrome.com/

@@ -1,15 +1,16 @@
 import * as core from '@actions/core';
-import * as github from '@actions/github';
+import puppeteer from 'puppeteer';
 
-try {
-  // `who-to-greet` input defined in action metadata file
-  const nameToGreet = core.getInput('who-to-greet');
-  console.log(`Hello ${nameToGreet}!!!!!`);
-  const time = new Date().toTimeString();
-  core.setOutput('time', time);
-  // Get the JSON webhook payload for the event that triggered the workflow
-  const payload = JSON.stringify(github.context.payload, undefined, 2);
-  console.log(`The event payload: ${payload}`);
-} catch (error) {
-  if (error instanceof Error) core.setFailed(error.message);
-}
+const run = async () => {
+  const url = core.getInput('url');
+
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+
+  await page.goto(url);
+  await page.screenshot({ path: 'screenshot.png' });
+
+  await browser.close();
+};
+
+run();
