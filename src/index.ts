@@ -10,11 +10,11 @@ import {
 import puppeteer from 'puppeteer';
 
 const run = async () => {
-  await installChrome();
+  const { executablePath } = await installChrome();
 
   const url = core.getInput('url');
 
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({ executablePath });
   const page = await browser.newPage();
 
   await page.goto(url);
@@ -24,13 +24,13 @@ const run = async () => {
 };
 
 const installChrome = async () => {
-  const browser = Browser.CHROME;
+  const browser = Browser.CHROMEHEADLESSSHELL;
   const buildId = await resolveBuildId(
     browser,
     BrowserPlatform.LINUX,
-    'latest',
+    'stable',
   );
-  await install({
+  return await install({
     cacheDir: join(homedir(), '.cache', 'puppeteer'),
     browser,
     buildId,
