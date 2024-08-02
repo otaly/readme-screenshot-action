@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: otaly/readme-screenshot-action@v1.0.0
+      - uses: actions/checkout@v4
+
+      - uses: ./
         with:
           url: https://developer.chrome.com/
