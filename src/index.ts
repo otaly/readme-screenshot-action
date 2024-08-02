@@ -10,7 +10,7 @@ import {
 import puppeteer from 'puppeteer';
 
 const run = async () => {
-  installChrome();
+  await installChrome();
 
   const url = core.getInput('url');
 
