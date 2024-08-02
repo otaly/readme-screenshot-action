@@ -1,7 +1,7 @@
 {
-  "name": "hello-world-typescript-action",
-  "version": "v1.0.1",
-  "description": "サンプルの JavaScript アクション。",
+  "name": "readme-screenshot-action",
+  "version": "v1.0.0",
+  "description": "READMEのスクリーンショットを自動更新するアクション",
   "main": "dist/index.js",
   "scripts": {
     "bundle": "npm run check:write && npm run package",

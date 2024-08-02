@@ -1,13 +1,10 @@
-name: "Hello World"
-description: "Greet someone and record the time"
+name: "readme-screenshot-action"
+description: "READMEのスクリーンショットを自動更新します"
 inputs:
-  who-to-greet: # id of input
-    description: "Who to greet"
+  url:
+    description: "スクリーンショットを撮るURL"
     required: true
-    default: "World"
-outputs:
-  time: # id of output
-    description: "The time we greeted you"
+    default: "http://localhost:3000/"
 runs:
   using: "node20"
   main: "dist/index.js"
