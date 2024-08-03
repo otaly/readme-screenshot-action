@@ -1,6 +1,7 @@
 import { homedir } from 'node:os';
 import { join } from 'node:path';
 import * as core from '@actions/core';
+import * as github from '@actions/github';
 import {
   Browser,
   BrowserPlatform,
@@ -18,7 +19,7 @@ const run = async () => {
   const page = await browser.newPage();
 
   await page.goto(url);
-  await page.screenshot({ path: 'screenshot.png' });
+  await page.screenshot({ path: genSavePath(url) });
 
   await browser.close();
 };
@@ -35,6 +36,11 @@ const installChrome = async () => {
     browser,
     buildId,
   });
+};
+
+const genSavePath = (url: string) => {
+  const urlPath = new URL(url).pathname.split('/').filter(Boolean).join('-');
+  return `__screenshots__/${urlPath}-${github.context.sha}.png`;
 };
 
 run();

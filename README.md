@@ -11,7 +11,20 @@ READMEのスクリーンショットを自動更新します。
 ## Example usage
 
 ```yaml
-uses: otaly/readme-screenshot-action@v1.0.1
-with:
-  url: http://localhost:4000/users
+jobs:
+  update_readme:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: otaly/readme-screenshot-action@v1.0.1
+        with:
+          url: https://developer.chrome.com/
+
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Apply format, lint, and bundle
 ```

@@ -6,6 +6,8 @@ jobs:
   run:
     name: Run
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - uses: actions/checkout@v4
@@ -13,3 +15,8 @@ jobs:
       - uses: ./
         with:
           url: https://developer.chrome.com/
+
+      - name: Commit
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Update screenshots
