@@ -45,7 +45,9 @@ const installChrome = async () => {
 
 const genSavePath = (url: string) => {
   const urlPath = new URL(url).pathname.split('/').filter(Boolean).join('-');
-  return join(SAVE_DIR, `${urlPath ?? `${urlPath}-`}${github.context.sha}.png`);
+  return join(SAVE_DIR, `${urlPath ?? `${urlPath}-`}${shortSha()}.png`);
 };
+
+const shortSha = () => github.context.sha.slice(0, 7);
 
 run();
