@@ -28,3 +28,7 @@ jobs:
         with:
           commit_message: Apply format, lint, and bundle
 ```
+
+## Example screenshot
+<!-- [README-SCREENSHOT-BEGIN] -->
+<!-- [README-SCREENSHOT-END] -->
