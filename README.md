@@ -31,4 +31,5 @@ jobs:
 
 ## Example screenshot
 <!-- [README-SCREENSHOT-BEGIN] -->
+![https://developer.chrome.com/](__screenshots__/f3697a0.png)
 <!-- [README-SCREENSHOT-END] -->
