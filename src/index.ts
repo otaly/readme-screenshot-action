@@ -1,3 +1,4 @@
+import * as fs from 'node:fs';
 import { homedir } from 'node:os';
 import { join } from 'node:path';
 import * as core from '@actions/core';
@@ -10,6 +11,8 @@ import {
 } from '@puppeteer/browsers';
 import puppeteer from 'puppeteer';
 
+const SAVE_DIR = '__screenshots__';
+
 const run = async () => {
   const { executablePath } = await installChrome();
 
@@ -19,6 +22,8 @@ const run = async () => {
   const page = await browser.newPage();
 
   await page.goto(url);
+
+  fs.mkdirSync(SAVE_DIR, { recursive: true });
   await page.screenshot({ path: genSavePath(url) });
 
   await browser.close();
@@ -40,7 +45,7 @@ const installChrome = async () => {
 
 const genSavePath = (url: string) => {
   const urlPath = new URL(url).pathname.split('/').filter(Boolean).join('-');
-  return `__screenshots__/${urlPath}-${github.context.sha}.png`;
+  return join(SAVE_DIR, `${urlPath ?? `${urlPath}-`}${github.context.sha}.png`);
 };
 
 run();
