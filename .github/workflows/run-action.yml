@@ -6,15 +6,36 @@ jobs:
   run:
     name: Run
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     permissions:
       contents: write
 
     steps:
       - uses: actions/checkout@v4
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+
+      - name: Set up node cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Start Sample App
+        run: |
+          npm i
+          npm run dev
+        working-directory: sampleapp
+        timeout-minutes: 2
+
       - uses: ./
         with:
-          url: https://developer.chrome.com/
+          url: http://localhost:5173/
 
       - name: Commit
         uses: stefanzweifel/git-auto-commit-action@v5
