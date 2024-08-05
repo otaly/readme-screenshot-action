@@ -26,16 +26,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Start Sample App
-        run: |
-          npm i
-          npm run dev
+      - name: Install dependencies
+        run: npm install
         working-directory: sampleapp
-        timeout-minutes: 2
 
       - uses: ./
         with:
           url: http://localhost:5173/
+          server_command: npm run dev
+        timeout-minutes: 3
 
       - name: Commit
         uses: stefanzweifel/git-auto-commit-action@v5

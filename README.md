@@ -6,7 +6,11 @@ READMEのスクリーンショットを自動更新します。
 
 ### `url`
 
-**Required** スクリーンショットを撮るURL。 デフォルト値: `"http://localhost:3000/"`.
+**Required** スクリーンショットを撮るURL  
+デフォルト値: `"http://localhost:3000/"`.
+
+### `server_command`
+**Optional** サーバー起動コマンド
 
 ## Example usage
 
@@ -31,5 +35,5 @@ jobs:
 
 ## Example screenshot
 <!-- [README-SCREENSHOT-BEGIN] -->
-![https://developer.chrome.com/](__screenshots__/f3697a0.png)
+![http://localhost:5173/](__screenshots__/aaa.png)
 <!-- [README-SCREENSHOT-END] -->

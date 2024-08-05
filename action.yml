@@ -5,6 +5,10 @@ inputs:
     description: "スクリーンショットを撮るURL"
     required: true
     default: "http://localhost:3000/"
+  server_command:
+    description: "サーバー起動コマンド (eg. npm start)"
+    required: false
+    default: ""
 runs:
   using: "node20"
   main: "dist/index.js"
