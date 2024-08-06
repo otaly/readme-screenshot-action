@@ -25,22 +25,27 @@ export const main = async (options: Options) => {
     serverRunner = new ServerRunner();
     serverRunner.start(inputs.serverCmd);
 
+    console.log('wait server....');
     await waitServer(inputs.url);
   }
 
   const browser = await puppeteer.launch({ executablePath });
   const page = await browser.newPage();
 
+  console.log('access url.');
   await page.goto(inputs.url);
 
   fs.mkdirSync(SAVE_DIR, { recursive: true });
   const savePath = genSavePath(inputs.url, commitSha);
+  console.log('take screenshot.');
   await page.screenshot({ path: savePath });
 
   await browser.close();
 
+  console.log('update README.');
   updateReadme(inputs.url, savePath);
 
+  console.log('close server.');
   serverRunner?.close();
 };
 

@@ -14,17 +14,19 @@ export class ServerRunner {
 
     process.on('exit', () => {
       this.close();
+      console.log('exit');
     });
 
     process.on('SIGTERM', () => {
       this.close();
+      console.log('SIGTERM');
       process.exit();
     });
   }
 
   close() {
     if (this.proc && !this.proc.killed) {
-      this.proc.kill('SIGINT');
+      this.proc.kill();
     }
   }
 }
