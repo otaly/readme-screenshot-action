@@ -35,7 +35,7 @@ export const main = async (options: Options) => {
   console.log('access url.');
   await page.goto(inputs.url);
 
-  fs.mkdirSync(SAVE_DIR, { recursive: true });
+  initSaveDir();
   const savePath = genSavePath(inputs.url, commitSha);
   console.log('take screenshot.');
   await page.screenshot({ path: savePath });
@@ -54,6 +54,18 @@ const waitServer = (url: string) => {
     ? url.replace('https', 'https-get')
     : url.replace('http', 'http-get');
   return waitOn({ resources: [resource], timeout: 30000 });
+};
+
+const initSaveDir = () => {
+  fs.mkdirSync(SAVE_DIR, { recursive: true });
+
+  const pngFiles = fs
+    .readdirSync(SAVE_DIR)
+    .filter((filename) => filename.endsWith('.png'));
+
+  for (const filename of pngFiles) {
+    fs.rmSync(join(SAVE_DIR, filename));
+  }
 };
 
 const genSavePath = (url: string, sha: string) => {
