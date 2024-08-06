@@ -2,11 +2,15 @@ name: "readme-screenshot-action"
 description: "READMEのスクリーンショットを自動更新します"
 inputs:
   url:
-    description: "スクリーンショットを撮るURL"
+    description: "スクリーンショットを撮る対象のURL"
     required: true
     default: "http://localhost:3000/"
   server_command:
-    description: "サーバー起動コマンド (eg. npm start)"
+    description: "サーバーを起動するためのコマンド (eg. npm start)"
+    required: false
+    default: ""
+  server_working_dir:
+    description: "サーバー起動コマンドを実行する作業ディレクトリ (eg. path/to/working-directory)"
     required: false
     default: ""
 runs:

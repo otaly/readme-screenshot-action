@@ -8,9 +8,10 @@ const run = async () => {
 
   const url = core.getInput('url');
   const serverCmd = core.getInput('server_command');
+  const serverWorkingDir = core.getInput('server_working_dir');
 
   await main({
-    inputs: { url, serverCmd },
+    inputs: { url, serverCmd, serverWorkingDir },
     executablePath,
     commitSha: github.context.sha,
   });

@@ -9,6 +9,7 @@ const SAVE_DIR = '__screenshots__';
 type Inputs = {
   url: string;
   serverCmd?: string;
+  serverWorkingDir?: string;
 };
 
 type Options = {
@@ -23,7 +24,7 @@ export const main = async (options: Options) => {
   let serverRunner: ServerRunner | undefined;
   if (inputs.serverCmd) {
     serverRunner = new ServerRunner();
-    serverRunner.start(inputs.serverCmd);
+    serverRunner.start(inputs.serverCmd, inputs.serverWorkingDir);
 
     console.log('wait server....');
     await waitServer(inputs.url);

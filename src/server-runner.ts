@@ -4,11 +4,11 @@ import { join } from 'node:path';
 export class ServerRunner {
   private proc?: cp.ChildProcess;
 
-  start(serverCmd: string) {
+  start(serverCmd: string, serverWorkingDir?: string) {
     const [cmd, ...args] = serverCmd.split(/\s+/);
     this.proc = cp.spawn(cmd, args, {
       shell: true,
-      cwd: join(__dirname, '..', 'sampleapp'),
+      cwd: serverWorkingDir,
       stdio: [0, 1, 2],
     });
 
