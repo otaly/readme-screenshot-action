@@ -6,14 +6,20 @@ READMEのスクリーンショットを自動更新します。
 
 ### `url`
 
-**Required** スクリーンショットを撮るURL  
+**Required**: スクリーンショットを撮る対象のURL。  
 デフォルト値: `"http://localhost:3000/"`.
 
 ### `server_command`
-**Optional** サーバー起動コマンド
+**Optional**: サーバーを起動するためのコマンド。  
+例: `"npm start"`
+
+### `server_working_dir`
+**Optional**: サーバー起動コマンドを実行する作業ディレクトリ。  
+例: `"path/to/working-directory"`
 
 ## Example usage
 
+### 外部URL
 ```yaml
 jobs:
   update_readme:
@@ -24,13 +30,46 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Take screenshot and update README
       - uses: otaly/readme-screenshot-action@v1.0.1
         with:
           url: https://developer.chrome.com/
 
+      # Commit changes
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: Apply format, lint, and bundle
+          commit_message: Update screenshots
+```
+
+### Node.js
+```yaml
+jobs:
+  update_readme:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Set up Node.js
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # Install dependencies
+      - run: npm install
+
+      # Take screenshot and update README
+      - uses: otaly/readme-screenshot-action@v1.0.1
+        with:
+          url: https://localhost:5173/
+          server_command: npm run dev
+
+      # Commit changes
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Update screenshots
 ```
 
 ## Example screenshot
