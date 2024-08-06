@@ -3,6 +3,7 @@ import { join } from 'node:path';
 import puppeteer from 'puppeteer';
 import waitOn from 'wait-on';
 import { ServerRunner } from './server-runner';
+import { sleep } from './utils';
 
 const SAVE_DIR = '__screenshots__';
 
@@ -10,6 +11,7 @@ type Inputs = {
   url: string;
   serverCmd?: string;
   serverWorkingDir?: string;
+  delay?: number;
 };
 
 type Options = {
@@ -38,6 +40,8 @@ export const main = async (options: Options) => {
 
   initSaveDir();
   const savePath = genSavePath(inputs.url, commitSha);
+
+  if (inputs.delay) await sleep(inputs.delay);
   console.log('take screenshot.');
   await page.screenshot({ path: savePath });
 

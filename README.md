@@ -6,16 +6,20 @@ READMEのスクリーンショットを自動更新します。
 
 ### `url`
 
-**Required**: スクリーンショットを撮る対象のURL。  
-デフォルト値: `"http://localhost:3000/"`.
+***Required***: スクリーンショットを撮る対象のURL。  
+例: `"http://localhost:3000/"`.
 
 ### `server_command`
-**Optional**: サーバーを起動するためのコマンド。  
+*Optional*: サーバーを起動するためのコマンド。  
 例: `"npm start"`
 
 ### `server_working_dir`
-**Optional**: サーバー起動コマンドを実行する作業ディレクトリ。  
+*Optional*: サーバー起動コマンドを実行する作業ディレクトリ。  
 例: `"path/to/working-directory"`
+
+### `delay`
+*Optional*: スクリーンショットを撮る前の遅延時間（ミリ秒）。  
+デフォルト値: `0`
 
 ## Example usage
 

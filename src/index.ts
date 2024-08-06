@@ -9,9 +9,11 @@ const run = async () => {
   const url = core.getInput('url');
   const serverCmd = core.getInput('server_command');
   const serverWorkingDir = core.getInput('server_working_dir');
+  const delayStr = core.getInput('delay');
+  const delay = delayStr ? Number(delayStr) : 0;
 
   await main({
-    inputs: { url, serverCmd, serverWorkingDir },
+    inputs: { url, serverCmd, serverWorkingDir, delay },
     executablePath,
     commitSha: github.context.sha,
   });
