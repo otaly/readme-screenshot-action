@@ -8,7 +8,7 @@ import {
 } from '@puppeteer/browsers';
 
 export const installChrome = async () => {
-  const browser = Browser.CHROMEHEADLESSSHELL;
+  const browser = Browser.CHROME;
   const buildId = await resolveBuildId(
     browser,
     BrowserPlatform.LINUX,
