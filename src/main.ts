@@ -9,6 +9,10 @@ const SAVE_DIR = '__screenshots__';
 
 type Inputs = {
   url: string;
+  viewport: {
+    width: number;
+    height: number;
+  };
   serverCmd?: string;
   serverWorkingDir?: string;
   delay?: number;
@@ -32,7 +36,10 @@ export const main = async (options: Options) => {
     await waitServer(inputs.url);
   }
 
-  const browser = await puppeteer.launch({ executablePath });
+  const browser = await puppeteer.launch({
+    executablePath,
+    defaultViewport: inputs.viewport,
+  });
   const page = await browser.newPage();
 
   console.log('access url.');

@@ -17,6 +17,14 @@ inputs:
     description: "スクリーンショットを撮る前の遅延時間（ミリ秒）"
     required: false
     default: "0"
+  width:
+    description: "ビューポートの横幅（CSSピクセル）"
+    required: false
+    default: "1920"
+  height:
+    description: "ビューポートの高さ（CSSピクセル）"
+    required: false
+    default: "1080"
 runs:
   using: "node20"
   main: "dist/index.js"
