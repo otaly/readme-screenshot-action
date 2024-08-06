@@ -35,5 +35,5 @@ jobs:
 
 ## Example screenshot
 <!-- [README-SCREENSHOT-BEGIN] -->
-![http://localhost:5173/](__screenshots__/147e175.png)
+![http://localhost:5173/](__screenshots__/aac8d7b.png)
 <!-- [README-SCREENSHOT-END] -->
