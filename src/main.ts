@@ -71,7 +71,7 @@ const initSaveDir = () => {
 
 const genSavePath = (url: string, sha: string) => {
   const urlPath = new URL(url).pathname.split('/').filter(Boolean).join('-');
-  return join(SAVE_DIR, `${urlPath ?? `${urlPath}-`}${shortSha(sha)}.png`);
+  return join(SAVE_DIR, `${urlPath && `${urlPath}_`}${shortSha(sha)}.png`);
 };
 
 const shortSha = (sha: string) => sha.slice(0, 7);

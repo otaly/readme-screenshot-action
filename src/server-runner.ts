@@ -1,5 +1,4 @@
 import * as cp from 'node:child_process';
-import { join } from 'node:path';
 
 export class ServerRunner {
   private proc?: cp.ChildProcess;
