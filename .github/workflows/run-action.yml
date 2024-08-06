@@ -34,6 +34,7 @@ jobs:
         with:
           url: http://localhost:5173/
           server_command: npm run dev
+          server_working_dir: sampleapp
         timeout-minutes: 3
 
       - name: Commit
