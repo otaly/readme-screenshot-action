@@ -11,9 +11,20 @@ export class ServerRunner {
       cwd: join(__dirname, '..', 'sampleapp'),
       stdio: [0, 1, 2],
     });
+
+    process.on('exit', () => {
+      this.close();
+    });
+
+    process.on('SIGTERM', () => {
+      this.close();
+      process.exit();
+    });
   }
 
   close() {
-    this.proc?.kill('SIGINT');
+    if (this.proc && !this.proc.killed) {
+      this.proc.kill('SIGINT');
+    }
   }
 }
