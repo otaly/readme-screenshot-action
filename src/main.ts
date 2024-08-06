@@ -1,6 +1,7 @@
 import * as fs from 'node:fs';
 import { join } from 'node:path';
 import puppeteer from 'puppeteer';
+import waitOn from 'wait-on';
 import { ServerRunner } from './server-runner';
 
 const SAVE_DIR = '__screenshots__';
@@ -23,6 +24,8 @@ export const main = async (options: Options) => {
   if (inputs.serverCmd) {
     serverRunner = new ServerRunner();
     serverRunner.start(inputs.serverCmd);
+
+    await waitServer(inputs.url);
   }
 
   const browser = await puppeteer.launch({ executablePath });
@@ -39,6 +42,13 @@ export const main = async (options: Options) => {
   updateReadme(inputs.url, savePath);
 
   serverRunner?.close();
+};
+
+const waitServer = (url: string) => {
+  const resource = url.startsWith('https')
+    ? url.replace('https', 'https-get')
+    : url.replace('http', 'http-get');
+  return waitOn({ resources: [resource], timeout: 30000 });
 };
 
 const genSavePath = (url: string, sha: string) => {
