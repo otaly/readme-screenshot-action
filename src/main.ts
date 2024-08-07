@@ -2,7 +2,7 @@ import * as fs from 'node:fs';
 import { join } from 'node:path';
 import puppeteer from 'puppeteer';
 import waitOn from 'wait-on';
-import { updateReadme } from './readme';
+import { createReadmeFromFile } from './readme';
 import { ServerRunner } from './server-runner';
 import { sleep } from './utils';
 
@@ -28,6 +28,9 @@ type Options = {
 export const main = async (options: Options) => {
   const { inputs, executablePath, commitSha } = options;
 
+  const readme = createReadmeFromFile();
+  readme.validate();
+
   let serverRunner: ServerRunner | undefined;
   if (inputs.serverCmd) {
     serverRunner = new ServerRunner();
@@ -37,26 +40,20 @@ export const main = async (options: Options) => {
     await waitServer(inputs.url);
   }
 
-  const browser = await puppeteer.launch({
-    executablePath,
-    defaultViewport: inputs.viewport,
-  });
-  const page = await browser.newPage();
-
-  console.log('access url.');
-  await page.goto(inputs.url);
-
   initSaveDir();
   const savePath = genSavePath(inputs.url, commitSha);
 
-  if (inputs.delay) await sleep(inputs.delay);
-  console.log('take screenshot.');
-  await page.screenshot({ path: savePath });
-
-  await browser.close();
+  await takeScreenshot({
+    savePath,
+    executablePath,
+    url: inputs.url,
+    viewport: inputs.viewport,
+    delay: inputs.delay,
+  });
 
   console.log('update README.');
-  updateReadme(inputs.url, savePath);
+  const newReadme = readme.updateScreenshot(inputs.url, savePath);
+  newReadme.save();
 
   console.log('close server.');
   serverRunner?.close();
@@ -67,6 +64,28 @@ const waitServer = (url: string) => {
     ? url.replace('https', 'https-get')
     : url.replace('http', 'http-get');
   return waitOn({ resources: [resource], timeout: 30000 });
+};
+
+const takeScreenshot = async (
+  options: { savePath: string } & Pick<Options, 'executablePath'> &
+    Pick<Inputs, 'url' | 'viewport' | 'delay'>,
+) => {
+  const { savePath, executablePath, url, viewport, delay } = options;
+
+  const browser = await puppeteer.launch({
+    executablePath,
+    defaultViewport: viewport,
+  });
+  const page = await browser.newPage();
+
+  console.log('access url.');
+  await page.goto(url);
+
+  if (delay) await sleep(delay);
+  console.log('take screenshot.');
+  await page.screenshot({ path: savePath });
+
+  await browser.close();
 };
 
 const initSaveDir = () => {

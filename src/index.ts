@@ -31,17 +31,21 @@ const run = async () => {
 
   const { executablePath } = await installChrome();
 
-  await main({
-    inputs: {
-      url: userInputs.url,
-      viewport: { width: userInputs.width, height: userInputs.height },
-      serverCmd: userInputs.server_command,
-      serverWorkingDir: userInputs.server_working_dir,
-      delay: userInputs.delay,
-    },
-    executablePath,
-    commitSha: github.context.sha,
-  });
+  try {
+    await main({
+      inputs: {
+        url: userInputs.url,
+        viewport: { width: userInputs.width, height: userInputs.height },
+        serverCmd: userInputs.server_command,
+        serverWorkingDir: userInputs.server_working_dir,
+        delay: userInputs.delay,
+      },
+      executablePath,
+      commitSha: github.context.sha,
+    });
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 const getInput = (name: string) => core.getInput(name) || undefined;

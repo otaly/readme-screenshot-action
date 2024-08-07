@@ -19,3 +19,15 @@ export class ReadmeNotExistsError extends Error {
     this.message = 'README.md does not exists';
   }
 }
+
+export class InvalidTagError extends Error {
+  name = 'InvalidTagError';
+
+  constructor() {
+    super();
+    this.message = `Add the following tag to README.md
+    <!-- [README-SCREENSHOT-BEGIN] -->
+    <!-- [README-SCREENSHOT-END] -->
+    `;
+  }
+}
