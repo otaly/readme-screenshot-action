@@ -15,8 +15,8 @@ const run = async () => {
       url: getInput('url'),
       width: getInput('width'),
       height: getInput('height'),
-      serverCmd: getInput('server_command'),
-      serverWorkingDir: getInput('server_working_dir'),
+      server_command: getInput('server_command'),
+      server_working_dir: getInput('server_working_dir'),
       delay: getInput('delay'),
     });
   } catch (error) {
