@@ -1,9 +1,8 @@
 import * as fs from 'node:fs';
 import { join } from 'node:path';
 import puppeteer from 'puppeteer';
-import waitOn from 'wait-on';
 import { createReadmeFromFile } from './readme';
-import { ServerRunner } from './server-runner';
+import { ServerConnection } from './server-connection';
 import { sleep } from './utils';
 
 const SAVE_DIR = '__screenshots__';
@@ -31,14 +30,14 @@ export const main = async (options: Options) => {
   const readme = createReadmeFromFile();
   readme.validate();
 
-  let serverRunner: ServerRunner | undefined;
-  if (inputs.serverCmd) {
-    serverRunner = new ServerRunner();
-    serverRunner.start(inputs.serverCmd, inputs.serverWorkingDir);
+  const serverConnection = new ServerConnection(
+    inputs.url,
+    inputs.serverCmd,
+    inputs.serverWorkingDir,
+  );
 
-    console.log('wait server....');
-    await waitServer(inputs.url);
-  }
+  console.log('connecting to server....');
+  await serverConnection.connect();
 
   initSaveDir();
   const savePath = genSavePath(inputs.url, commitSha);
@@ -55,15 +54,8 @@ export const main = async (options: Options) => {
   const newReadme = readme.updateScreenshot(inputs.url, savePath);
   newReadme.save();
 
-  console.log('close server.');
-  serverRunner?.close();
-};
-
-const waitServer = (url: string) => {
-  const resource = url.startsWith('https')
-    ? url.replace('https', 'https-get')
-    : url.replace('http', 'http-get');
-  return waitOn({ resources: [resource], timeout: 30000 });
+  console.log('disconnect server.');
+  serverConnection.disconnect();
 };
 
 const takeScreenshot = async (
@@ -78,7 +70,6 @@ const takeScreenshot = async (
   });
   const page = await browser.newPage();
 
-  console.log('access url.');
   await page.goto(url);
 
   if (delay) await sleep(delay);
