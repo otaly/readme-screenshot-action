@@ -13,8 +13,8 @@ export const createReadmeFromFile = (): Readme => {
 
 export class Readme {
   constructor(
-    private lines: string[],
-    private tag: ScreenshotTag,
+    private readonly lines: string[],
+    private readonly tag: ScreenshotTag,
   ) {}
 
   validate() {
