@@ -1,14 +1,13 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
 import type { ZodError } from 'zod';
-import { InvalidInputError } from './errors';
+import { InvalidInputError, ReadmeNotExistsError } from './errors';
 import { installChrome } from './install-chrome';
 import { main } from './main';
+import { readmeExists } from './readme';
 import { type UserInputs, userInputsSchema } from './validation';
 
 const run = async () => {
-  const { executablePath } = await installChrome();
-
   let userInputs: UserInputs;
 
   try {
@@ -24,6 +23,13 @@ const run = async () => {
     console.error(new InvalidInputError(error as ZodError));
     process.exit(1);
   }
+
+  if (!readmeExists()) {
+    console.error(new ReadmeNotExistsError());
+    process.exit(1);
+  }
+
+  const { executablePath } = await installChrome();
 
   await main({
     inputs: {

@@ -10,3 +10,12 @@ export class InvalidInputError extends Error {
       .join('\n');
   }
 }
+
+export class ReadmeNotExistsError extends Error {
+  name = 'ReadmeNotExistsError';
+
+  constructor() {
+    super();
+    this.message = 'README.md does not exists';
+  }
+}
