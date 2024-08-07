@@ -23,7 +23,6 @@ export const main = async (options: Options) => {
   const { inputs, executablePath, commitSha } = options;
 
   const readme = createReadmeFromFile();
-  readme.validate();
 
   const serverConnection = new ServerConnection(
     inputs.url,

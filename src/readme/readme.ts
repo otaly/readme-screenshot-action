@@ -8,7 +8,9 @@ type ScreenshotTag = {
 
 export const createReadmeFromFile = (): Readme => {
   const lines = fs.readFileSync('README.md', { encoding: 'utf8' }).split('\n');
-  return new Readme(lines, findScreenshotTag(lines));
+  const tag = findScreenshotTag(lines);
+  validateTag(tag);
+  return new Readme(lines, tag);
 };
 
 export class Readme {
@@ -16,18 +18,6 @@ export class Readme {
     private readonly lines: string[],
     private readonly tag: ScreenshotTag,
   ) {}
-
-  validate() {
-    const { begin, end } = this.tag;
-    // タグが片方しかない場合やENDタグがBEGINタグより前にある場合はエラー
-    if (
-      (begin == null && end != null) ||
-      (begin != null && end == null) ||
-      end < begin
-    ) {
-      throw new InvalidTagError();
-    }
-  }
 
   updateScreenshot(url: string, screenshotPath: string): Readme {
     let { begin, end } = this.tag;
@@ -62,4 +52,15 @@ const findScreenshotTag = (lines: string[]): ScreenshotTag => {
   );
 
   return { begin, end };
+};
+
+const validateTag = (tag: ScreenshotTag) => {
+  // タグが片方しかない場合やENDタグがBEGINタグより前にある場合はエラー
+  if (
+    (tag.begin == null && tag.end != null) ||
+    (tag.begin != null && tag.end == null) ||
+    tag.end < tag.begin
+  ) {
+    throw new InvalidTagError();
+  }
 };
