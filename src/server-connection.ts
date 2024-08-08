@@ -1,5 +1,6 @@
 import * as cp from 'node:child_process';
 import waitOn from 'wait-on';
+import { Logger } from './utils';
 
 export class ServerConnection {
   private proc?: cp.ChildProcess;
@@ -21,12 +22,12 @@ export class ServerConnection {
 
       process.on('exit', () => {
         this.disconnect();
-        console.log('exit');
+        Logger.debug('exit');
       });
 
       process.on('SIGTERM', () => {
         this.disconnect();
-        console.log('SIGTERM');
+        Logger.debug('SIGTERM');
         process.exit();
       });
     }

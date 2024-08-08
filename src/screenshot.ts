@@ -2,7 +2,7 @@ import * as fs from 'node:fs';
 import { join } from 'node:path';
 import puppeteer from 'puppeteer';
 import type { Screenshot } from './types';
-import { sleep } from './utils';
+import { Logger, sleep } from './utils';
 
 const SAVE_DIR = '__screenshots__';
 
@@ -31,7 +31,7 @@ export const takeScreenshots = async (
     await page.goto(url);
 
     if (delay) await sleep(delay);
-    console.log('take screenshot.');
+    Logger.info(`take screenshot. ${url}`);
     const savePath = genSavePath(url, commitSha);
     await page.screenshot({ path: savePath });
 

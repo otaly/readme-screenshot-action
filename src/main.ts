@@ -1,6 +1,7 @@
 import { createReadmeFromFile } from './readme';
 import { initSaveDir, takeScreenshots } from './screenshot';
 import { ServerConnection } from './server-connection';
+import { Logger } from './utils';
 
 type Inputs = {
   urls: string[];
@@ -30,7 +31,7 @@ export const main = async (options: Options) => {
     inputs.serverWorkingDir,
   );
 
-  console.log('connecting to server....');
+  Logger.info('connecting to server....');
   await serverConnection.connect();
 
   initSaveDir();
@@ -43,10 +44,10 @@ export const main = async (options: Options) => {
     commitSha,
   });
 
-  console.log('update README.');
+  Logger.info('update README.');
   const newReadme = readme.updateScreenshots(screenshots);
   newReadme.save();
 
-  console.log('disconnect server.');
+  Logger.info('disconnect server.');
   serverConnection.disconnect();
 };
