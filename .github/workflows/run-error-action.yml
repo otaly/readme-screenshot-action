@@ -1,0 +1,30 @@
+name: Run Error Action
+
+on: workflow_dispatch
+
+jobs:
+  run:
+    name: Update Screenshot
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Puppeteer cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/puppeteer
+          key: ${{ runner.os }}-puppeteer
+
+      - uses: ./
+        with:
+          urls: |
+            http://localhost:5173/
+            http://localhost:5173/hello
+          server_command: npm run dev
+          server_working_dir: sampleapp
+          delay: hoge
+        timeout-minutes: 3
