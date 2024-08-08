@@ -44,7 +44,9 @@ const run = async () => {
         urls: userInputs.urls,
         viewport: { width: userInputs.width, height: userInputs.height },
         serverCmd: userInputs.server_command,
-        serverWorkingDir: userInputs.server_working_dir,
+        serverWorkingDir:
+          userInputs.server_working_dir &&
+          core.toPlatformPath(userInputs.server_working_dir),
         delay: userInputs.delay,
       },
       executablePath,
