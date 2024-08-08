@@ -21,10 +21,7 @@ jobs:
 
       - uses: ./
         with:
-          urls: |
-            http://localhost:5173/
-            http://localhost:5173/hello
           server_command: npm run dev
           server_working_dir: sampleapp
-          delay: hoge
+          delay: 3000
         timeout-minutes: 3

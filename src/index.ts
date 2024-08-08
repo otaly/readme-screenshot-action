@@ -17,7 +17,7 @@ const run = async () => {
 
   try {
     userInputs = userInputsSchema.parse({
-      urls: getInput('urls'),
+      urls: core.getMultilineInput('urls'),
       width: getInput('width'),
       height: getInput('height'),
       server_command: getInput('server_command'),
