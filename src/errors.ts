@@ -11,21 +11,21 @@ export class InvalidInputError extends Error {
   }
 }
 
-export class ReadmeNotExistsError extends Error {
-  name = 'ReadmeNotExistsError';
+export class ReadmeNotExistError extends Error {
+  name = 'ReadmeNotExistError';
 
   constructor() {
     super();
-    this.message = 'README.md does not exists';
+    this.message = 'README.md does not exist';
   }
 }
 
-export class ServerWorkingDirNotExistsError extends Error {
-  name = 'ServerWorkingDirNotExistsError';
+export class ServerWorkingDirNotExistError extends Error {
+  name = 'ServerWorkingDirNotExistError';
 
   constructor(serverWorkingDir: string) {
     super();
-    this.message = `Path "${serverWorkingDir}" does not exists`;
+    this.message = `Path "${serverWorkingDir}" does not exist`;
   }
 }
 

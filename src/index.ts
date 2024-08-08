@@ -4,8 +4,8 @@ import * as github from '@actions/github';
 import type { ZodError } from 'zod';
 import {
   InvalidInputError,
-  ReadmeNotExistsError,
-  ServerWorkingDirNotExistsError,
+  ReadmeNotExistError,
+  ServerWorkingDirNotExistError,
 } from './errors';
 import { installChrome } from './install-chrome';
 import { main } from './main';
@@ -66,7 +66,7 @@ const getInput = (name: string) => core.getInput(name) || undefined;
 
 const validateEnvironment = (userInputs: UserInputs) => {
   if (!readmeExists()) {
-    throw new ReadmeNotExistsError();
+    throw new ReadmeNotExistError();
   }
 
   if (
@@ -74,7 +74,7 @@ const validateEnvironment = (userInputs: UserInputs) => {
     userInputs.server_working_dir &&
     !fs.existsSync(userInputs.server_working_dir)
   ) {
-    throw new ServerWorkingDirNotExistsError(userInputs.server_working_dir);
+    throw new ServerWorkingDirNotExistError(userInputs.server_working_dir);
   }
 };
 
