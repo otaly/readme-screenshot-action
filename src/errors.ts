@@ -20,6 +20,15 @@ export class ReadmeNotExistsError extends Error {
   }
 }
 
+export class ServerWorkingDirNotExistsError extends Error {
+  name = 'ServerWorkingDirNotExistsError';
+
+  constructor(serverWorkingDir: string) {
+    super();
+    this.message = `Path "${serverWorkingDir}" does not exists`;
+  }
+}
+
 export class InvalidTagError extends Error {
   name = 'InvalidTagError';
 

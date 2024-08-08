@@ -1,7 +1,12 @@
+import fs from 'node:fs';
 import * as core from '@actions/core';
 import * as github from '@actions/github';
 import type { ZodError } from 'zod';
-import { InvalidInputError, ReadmeNotExistsError } from './errors';
+import {
+  InvalidInputError,
+  ReadmeNotExistsError,
+  ServerWorkingDirNotExistsError,
+} from './errors';
 import { installChrome } from './install-chrome';
 import { main } from './main';
 import { readmeExists } from './readme';
@@ -24,8 +29,10 @@ const run = async () => {
     return;
   }
 
-  if (!readmeExists()) {
-    core.setFailed(new ReadmeNotExistsError());
+  try {
+    validateEnvironment(userInputs);
+  } catch (error) {
+    if (error instanceof Error) core.setFailed(error);
     return;
   }
 
@@ -49,5 +56,19 @@ const run = async () => {
 };
 
 const getInput = (name: string) => core.getInput(name) || undefined;
+
+const validateEnvironment = (userInputs: UserInputs) => {
+  if (!readmeExists()) {
+    throw new ReadmeNotExistsError();
+  }
+
+  if (
+    userInputs.server_command &&
+    userInputs.server_working_dir &&
+    !fs.existsSync(userInputs.server_working_dir)
+  ) {
+    throw new ServerWorkingDirNotExistsError(userInputs.server_working_dir);
+  }
+};
 
 run();
