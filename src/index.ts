@@ -8,6 +8,8 @@ import { readmeExists } from './readme';
 import { type UserInputs, userInputsSchema } from './validation';
 
 const run = async () => {
+  const urls = getInput('urls')?.split('\n');
+  console.log(urls);
   let userInputs: UserInputs;
 
   try {
