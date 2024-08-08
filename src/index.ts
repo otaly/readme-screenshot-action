@@ -20,13 +20,13 @@ const run = async () => {
       delay: getInput('delay'),
     });
   } catch (error) {
-    console.error(new InvalidInputError(error as ZodError));
-    process.exit(1);
+    core.setFailed(new InvalidInputError(error as ZodError));
+    return;
   }
 
   if (!readmeExists()) {
-    console.error(new ReadmeNotExistsError());
-    process.exit(1);
+    core.setFailed(new ReadmeNotExistsError());
+    return;
   }
 
   const { executablePath } = await installChrome();
@@ -44,8 +44,7 @@ const run = async () => {
       commitSha: github.context.sha,
     });
   } catch (error) {
-    console.error(error);
-    process.exit(1);
+    if (error instanceof Error) core.setFailed(error);
   }
 };
 
