@@ -93,7 +93,7 @@ jobs:
 ```
 
 ## Example screenshot
-<!-- [README-SCREENSHOT-BEGIN] -->
+<!-- :README-SCREENSHOT-BEGIN: -->
 ![http://localhost:5173/](__screenshots__/d22a43f.png)
 ![http://localhost:5173/hello](__screenshots__/hello_d22a43f.png)
-<!-- [README-SCREENSHOT-END] -->
+<!-- :README-SCREENSHOT-END: -->

@@ -26,8 +26,8 @@ export class Readme {
 
     if (begin === -1 && end === -1) {
       lines.push(
-        '<!-- [README-SCREENSHOT-BEGIN] -->',
-        '<!-- [README-SCREENSHOT-END] -->',
+        '<!-- :README-SCREENSHOT-BEGIN: -->',
+        '<!-- :README-SCREENSHOT-END: -->',
       );
       begin = lines.length - 2;
       end = lines.length - 1;
@@ -48,10 +48,10 @@ export class Readme {
 
 const findScreenshotTag = (lines: string[]): ScreenshotTag => {
   const begin = lines.findIndex((l) =>
-    /<!-- *\[README-SCREENSHOT-BEGIN\] *-->/.test(l),
+    /<!-- *:README-SCREENSHOT-BEGIN: *-->/.test(l),
   );
   const end = lines.findIndex((l) =>
-    /<!-- \[README-SCREENSHOT-END\] -->/.test(l),
+    /<!-- *:README-SCREENSHOT-END: *-->/.test(l),
   );
 
   return { begin, end };
