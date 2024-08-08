@@ -10,7 +10,6 @@ import {
 import { installChrome } from './install-chrome';
 import { main } from './main';
 import { readmeExists } from './readme';
-import type { Screenshot } from './types';
 import { type UserInputs, userInputsSchema } from './validation';
 
 const run = async () => {
@@ -39,9 +38,8 @@ const run = async () => {
 
   const { executablePath } = await installChrome();
 
-  let screenshots: Screenshot[];
   try {
-    screenshots = await main({
+    await main({
       inputs: {
         urls: userInputs.urls,
         viewport: { width: userInputs.width, height: userInputs.height },
@@ -56,10 +54,7 @@ const run = async () => {
     });
   } catch (error) {
     if (error instanceof Error) core.setFailed(error);
-    return;
   }
-
-  createSummary(screenshots);
 };
 
 const getInput = (name: string) => core.getInput(name) || undefined;
@@ -76,19 +71,6 @@ const validateEnvironment = (userInputs: UserInputs) => {
   ) {
     throw new ServerWorkingDirNotExistError(userInputs.server_working_dir);
   }
-};
-
-const createSummary = (screenshots: Screenshot[]) => {
-  core.summary.addHeading('readme-screenshot-action');
-
-  for (const screenshot of screenshots) {
-    core.summary.addImage(screenshot.path, screenshot.url);
-    core.summary.addRaw('URL: ');
-    core.summary.addLink(screenshot.url, screenshot.url);
-    core.summary.addBreak();
-  }
-
-  core.summary.write();
 };
 
 run();
