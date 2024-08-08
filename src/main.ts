@@ -49,4 +49,6 @@ export const main = async (options: Options) => {
 
   console.log('disconnect server.');
   serverConnection.disconnect();
+
+  return screenshots;
 };
