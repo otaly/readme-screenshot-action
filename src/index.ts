@@ -8,13 +8,11 @@ import { readmeExists } from './readme';
 import { type UserInputs, userInputsSchema } from './validation';
 
 const run = async () => {
-  const urls = getInput('urls')?.split('\n');
-  console.log(urls);
   let userInputs: UserInputs;
 
   try {
     userInputs = userInputsSchema.parse({
-      url: getInput('url'),
+      urls: getInput('urls'),
       width: getInput('width'),
       height: getInput('height'),
       server_command: getInput('server_command'),
@@ -36,7 +34,7 @@ const run = async () => {
   try {
     await main({
       inputs: {
-        url: userInputs.url,
+        urls: userInputs.urls,
         viewport: { width: userInputs.width, height: userInputs.height },
         serverCmd: userInputs.server_command,
         serverWorkingDir: userInputs.server_working_dir,

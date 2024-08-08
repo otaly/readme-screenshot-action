@@ -1,9 +1,9 @@
 import { createReadmeFromFile } from './readme';
-import { initSaveDir, takeScreenshot } from './screenshot';
+import { initSaveDir, takeScreenshots } from './screenshot';
 import { ServerConnection } from './server-connection';
 
 type Inputs = {
-  url: string;
+  urls: string[];
   viewport: {
     width: number;
     height: number;
@@ -25,7 +25,7 @@ export const main = async (options: Options) => {
   const readme = createReadmeFromFile();
 
   const serverConnection = new ServerConnection(
-    inputs.url,
+    inputs.urls,
     inputs.serverCmd,
     inputs.serverWorkingDir,
   );
@@ -35,16 +35,16 @@ export const main = async (options: Options) => {
 
   initSaveDir();
 
-  const savePath = await takeScreenshot({
+  const screenshots = await takeScreenshots({
     executablePath,
-    url: inputs.url,
+    urls: inputs.urls,
     viewport: inputs.viewport,
     delay: inputs.delay,
     commitSha,
   });
 
   console.log('update README.');
-  const newReadme = readme.updateScreenshot(inputs.url, savePath);
+  const newReadme = readme.updateScreenshots(screenshots);
   newReadme.save();
 
   console.log('disconnect server.');

@@ -1,20 +1,23 @@
 import * as fs from 'node:fs';
 import { join } from 'node:path';
 import puppeteer from 'puppeteer';
+import type { Screenshot } from './types';
 import { sleep } from './utils';
 
 const SAVE_DIR = '__screenshots__';
 
 type TakeScreenshotOptions = {
   executablePath: string;
-  url: string;
+  urls: string[];
   viewport: { width: number; height: number };
   delay?: number;
   commitSha: string;
 };
 
-export const takeScreenshot = async (options: TakeScreenshotOptions) => {
-  const { executablePath, url, viewport, delay, commitSha } = options;
+export const takeScreenshots = async (
+  options: TakeScreenshotOptions,
+): Promise<Screenshot[]> => {
+  const { executablePath, urls, viewport, delay, commitSha } = options;
 
   const browser = await puppeteer.launch({
     executablePath,
@@ -22,16 +25,22 @@ export const takeScreenshot = async (options: TakeScreenshotOptions) => {
   });
   const page = await browser.newPage();
 
-  await page.goto(url);
+  const screenshots: Screenshot[] = [];
 
-  if (delay) await sleep(delay);
-  console.log('take screenshot.');
-  const savePath = genSavePath(url, commitSha);
-  await page.screenshot({ path: savePath });
+  for (const url of urls) {
+    await page.goto(url);
+
+    if (delay) await sleep(delay);
+    console.log('take screenshot.');
+    const savePath = genSavePath(url, commitSha);
+    await page.screenshot({ path: savePath });
+
+    screenshots.push({ url, path: savePath });
+  }
 
   await browser.close();
 
-  return savePath;
+  return screenshots;
 };
 
 export const initSaveDir = () => {

@@ -4,10 +4,14 @@ READMEのスクリーンショットを自動更新します。
 
 ## Inputs
 
-### `url`
-
+### `urls`
 ***Required***: スクリーンショットを撮る対象のURL。  
-例: `"http://localhost:3000/"`.
+例:
+```yaml
+urls: |
+  http://localhost:3000/
+  http://localhost:3000/hello
+```
 
 ### `server_command`
 *Optional*: サーバーを起動するためのコマンド。  
@@ -45,7 +49,9 @@ jobs:
       # Take screenshot and update README
       - uses: otaly/readme-screenshot-action@v1.0.1
         with:
-          url: https://developer.chrome.com/
+          urls: |
+            https://developer.chrome.com/
+            https://developer.chrome.com/blog
 
       # Commit changes
       - uses: stefanzweifel/git-auto-commit-action@v5
@@ -75,7 +81,9 @@ jobs:
       # Take screenshot and update README
       - uses: otaly/readme-screenshot-action@v1.0.1
         with:
-          url: https://localhost:5173/
+          urls: |
+            https://localhost:5173/
+            https://localhost:5173/hello
           server_command: npm run dev
 
       # Commit changes

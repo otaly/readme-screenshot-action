@@ -5,7 +5,7 @@ export class ServerConnection {
   private proc?: cp.ChildProcess;
 
   constructor(
-    private url: string,
+    private urls: string[],
     private serverCmd?: string,
     private serverWorkingDir?: string,
   ) {}
@@ -31,7 +31,7 @@ export class ServerConnection {
       });
     }
 
-    await waitServer(this.url);
+    await waitServer(this.urls);
   }
 
   disconnect() {
@@ -41,9 +41,11 @@ export class ServerConnection {
   }
 }
 
-const waitServer = (url: string) => {
-  const resource = url.startsWith('https')
-    ? url.replace('https', 'https-get')
-    : url.replace('http', 'http-get');
-  return waitOn({ resources: [resource], timeout: 30000 });
+const waitServer = (urls: string[]) => {
+  const resources = urls.map((url) =>
+    url.startsWith('https')
+      ? url.replace('https', 'https-get')
+      : url.replace('http', 'http-get'),
+  );
+  return waitOn({ resources, timeout: 30000 });
 };

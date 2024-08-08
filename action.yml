@@ -2,10 +2,6 @@ name: "readme-screenshot-action"
 description: "READMEのスクリーンショットを自動更新します"
 inputs:
   urls:
-    description: ""
-    required: true
-    default: ""
-  url:
     description: "スクリーンショットを撮る対象のURL (eg. http://localhost:3000/)"
     required: true
     default: ""

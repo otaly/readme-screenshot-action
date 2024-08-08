@@ -1,4 +1,5 @@
 import * as fs from 'node:fs';
+import type { Screenshot } from 'src/types';
 import { InvalidTagError } from '../errors';
 
 type ScreenshotTag = {
@@ -19,7 +20,7 @@ export class Readme {
     private readonly tag: ScreenshotTag,
   ) {}
 
-  updateScreenshot(url: string, screenshotPath: string): Readme {
+  updateScreenshots(screenshots: Screenshot[]): Readme {
     let { begin, end } = this.tag;
     const lines = this.lines.slice();
 
@@ -32,8 +33,10 @@ export class Readme {
       end = lines.length - 1;
     }
 
+    const imgTags = screenshots.map(({ url, path }) => `![${url}](${path})`);
+
     // 開始タグと終了タグの間を置換
-    lines.splice(begin + 1, end - begin - 1, `![${url}](${screenshotPath})`);
+    lines.splice(begin + 1, end - begin - 1, ...imgTags);
 
     return new Readme(lines, { begin, end });
   }

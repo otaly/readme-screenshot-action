@@ -41,7 +41,6 @@ jobs:
           urls: |
             http://localhost:5173/
             http://localhost:5173/hello
-          url: http://localhost:5173/
           server_command: npm run dev
           server_working_dir: sampleapp
         timeout-minutes: 3

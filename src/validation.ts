@@ -1,7 +1,10 @@
 import { z } from 'zod';
 
 export const userInputsSchema = z.object({
-  url: z.string().url(),
+  urls: z.preprocess(
+    (v) => (v as string).split('\n'),
+    z.array(z.string().url()).nonempty(),
+  ),
   width: z.coerce.number().nonnegative().default(1920),
   height: z.coerce.number().nonnegative().default(1080),
   server_command: z.string().optional(),
