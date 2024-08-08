@@ -31,7 +31,7 @@ export const takeScreenshots = async (
     await page.goto(url);
 
     if (delay) await sleep(delay);
-    Logger.info(`take screenshot. ${url}`);
+    Logger.info(`Take screenshot. ${url}`);
     const savePath = genSavePath(url, commitSha);
     await page.screenshot({ path: savePath });
 

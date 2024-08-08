@@ -22,7 +22,7 @@ export class ServerConnection {
 
       process.on('exit', () => {
         this.disconnect();
-        Logger.debug('exit');
+        Logger.debug('Exit');
       });
 
       process.on('SIGTERM', () => {

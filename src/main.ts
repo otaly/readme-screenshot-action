@@ -31,7 +31,7 @@ export const main = async (options: Options) => {
     inputs.serverWorkingDir,
   );
 
-  Logger.info('connecting to server....');
+  Logger.info('Connecting to server....');
   await serverConnection.connect();
 
   initSaveDir();
@@ -44,10 +44,10 @@ export const main = async (options: Options) => {
     commitSha,
   });
 
-  Logger.info('update README.');
+  Logger.info('Update README.');
   const newReadme = readme.updateScreenshots(screenshots);
   newReadme.save();
 
-  Logger.info('disconnect server.');
+  Logger.info('Disconnect server.');
   serverConnection.disconnect();
 };
