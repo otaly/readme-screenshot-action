@@ -14,23 +14,23 @@ urls: |
 ```
 
 ### `server_command`
-*Optional*: サーバーを起動するためのコマンド。  
+***Optional***: サーバーを起動するためのコマンド。  
 例: `"npm start"`
 
 ### `server_working_dir`
-*Optional*: サーバー起動コマンドを実行する作業ディレクトリ。  
+***Optional***: サーバー起動コマンドを実行する作業ディレクトリ。  
 例: `"path/to/working-directory"`
 
 ### `delay`
-*Optional*: スクリーンショットを撮る前の遅延時間（ミリ秒）。  
+***Optional***: スクリーンショットを撮る前の遅延時間（ミリ秒）。  
 デフォルト値: `0`
 
 ### `width`
-*Optional*: ビューポートの横幅（CSSピクセル）。  
+***Optional***: ビューポートの横幅（CSSピクセル）。  
 デフォルト値: `1920`
 
 ### `height`
-*Optional*: ビューポートの高さ（CSSピクセル）。  
+***Optional***: ビューポートの高さ（CSSピクセル）。  
 デフォルト値: `1080`
 
 ## Example usage
