@@ -94,6 +94,6 @@ jobs:
 
 ## Example screenshots
 <!-- :README-SCREENSHOT-BEGIN: -->
-![http://localhost:5173/](__screenshots__/9ba8dcc.png)
-![http://localhost:5173/hello](__screenshots__/hello_9ba8dcc.png)
+![http://localhost:5173/](__screenshots__/e5837c4.png)
+![http://localhost:5173/hello](__screenshots__/hello_e5837c4.png)
 <!-- :README-SCREENSHOT-END: -->
