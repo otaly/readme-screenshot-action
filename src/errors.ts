@@ -35,8 +35,8 @@ export class InvalidTagError extends Error {
   constructor() {
     super();
     this.message = `Add the following tag to README.md
-    <!-- [README-SCREENSHOT-BEGIN] -->
-    <!-- [README-SCREENSHOT-END] -->
+    <!-- :README-SCREENSHOT-BEGIN: -->
+    <!-- :README-SCREENSHOT-END: -->
     `;
   }
 }
