@@ -2,7 +2,7 @@ import * as fs from 'node:fs';
 import { InvalidTagError } from 'src/errors';
 import { Readme, createReadmeFromFile } from 'src/readme';
 
-jest.mock<typeof fs>('node:fs');
+jest.mock('node:fs');
 
 const mockReadFileSync = (fs as jest.Mocked<typeof fs>).readFileSync;
 const mockWriteFileSync = (fs as jest.Mocked<typeof fs>).writeFileSync;
