@@ -28,8 +28,8 @@ const findScreenshotTag = (lines: string[]): ScreenshotTag => {
 const validateTag = (tag: ScreenshotTag) => {
   // タグが片方しかない場合やENDタグがBEGINタグより前にある場合はエラー
   if (
-    (tag.begin == null && tag.end != null) ||
-    (tag.begin != null && tag.end == null) ||
+    (tag.begin !== -1 && tag.end === -1) ||
+    (tag.begin === -1 && tag.end !== -1) ||
     tag.end < tag.begin
   ) {
     throw new InvalidTagError();
@@ -58,7 +58,8 @@ export class Readme {
     const imgTags = screenshots.map(({ url, path }) => `![${url}](${path})`);
 
     // 開始タグと終了タグの間を置換
-    lines.splice(begin + 1, end - begin - 1, ...imgTags);
+    const deleted = lines.splice(begin + 1, end - begin - 1, ...imgTags);
+    end += screenshots.length - deleted.length;
 
     return new Readme(lines, { begin, end });
   }
