@@ -14,6 +14,28 @@ export const createReadmeFromFile = (): Readme => {
   return new Readme(lines, tag);
 };
 
+const findScreenshotTag = (lines: string[]): ScreenshotTag => {
+  const begin = lines.findIndex((l) =>
+    /<!-- *:README-SCREENSHOT-BEGIN: *-->/.test(l),
+  );
+  const end = lines.findIndex((l) =>
+    /<!-- *:README-SCREENSHOT-END: *-->/.test(l),
+  );
+
+  return { begin, end };
+};
+
+const validateTag = (tag: ScreenshotTag) => {
+  // タグが片方しかない場合やENDタグがBEGINタグより前にある場合はエラー
+  if (
+    (tag.begin == null && tag.end != null) ||
+    (tag.begin != null && tag.end == null) ||
+    tag.end < tag.begin
+  ) {
+    throw new InvalidTagError();
+  }
+};
+
 export class Readme {
   constructor(
     private readonly lines: string[],
@@ -45,25 +67,3 @@ export class Readme {
     fs.writeFileSync('README.md', this.lines.join('\n'));
   }
 }
-
-const findScreenshotTag = (lines: string[]): ScreenshotTag => {
-  const begin = lines.findIndex((l) =>
-    /<!-- *:README-SCREENSHOT-BEGIN: *-->/.test(l),
-  );
-  const end = lines.findIndex((l) =>
-    /<!-- *:README-SCREENSHOT-END: *-->/.test(l),
-  );
-
-  return { begin, end };
-};
-
-const validateTag = (tag: ScreenshotTag) => {
-  // タグが片方しかない場合やENDタグがBEGINタグより前にある場合はエラー
-  if (
-    (tag.begin == null && tag.end != null) ||
-    (tag.begin != null && tag.end == null) ||
-    tag.end < tag.begin
-  ) {
-    throw new InvalidTagError();
-  }
-};
