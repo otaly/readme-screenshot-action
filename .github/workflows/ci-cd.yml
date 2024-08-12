@@ -1,4 +1,4 @@
-name: CD
+name: CI/CD
 
 on: push
 
@@ -26,8 +26,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Install
+      - name: Install dependencies
         run: npm ci
+
+      - name: Unit test
+        run: npm test
 
       - name: Format & Lint
         run: npm run check:write
