@@ -1,4 +1,4 @@
-import { main } from 'src/main';
+import { type Options, main } from 'src/main';
 import * as readme from 'src/readme/readme';
 import * as screenshot from 'src/screenshot';
 import * as serverConnection from 'src/server-connection';
@@ -15,7 +15,7 @@ const readmeMock = {
   updateScreenshots: jest.fn().mockReturnThis(),
 };
 
-const mainOptionsForTest: Parameters<typeof main>[0] = {
+const mainOptionsForTest: Options = {
   inputs: { urls: [], viewport: { width: 1920, height: 1080 } },
   executablePath: '.',
   commitSha: 'abcdefg',

@@ -14,7 +14,7 @@ type Inputs = {
   delay?: number;
 };
 
-type Options = {
+export type Options = {
   inputs: Inputs;
   executablePath: string;
   commitSha: string;
