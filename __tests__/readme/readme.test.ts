@@ -5,7 +5,7 @@ import { Readme, createReadmeFromFile } from 'src/readme';
 jest.mock('node:fs');
 
 describe('createReadmeFromFile', () => {
-  const mockReadFileSync = (fs as jest.Mocked<typeof fs>).readFileSync;
+  const readFileSyncMock = (fs as jest.Mocked<typeof fs>).readFileSync;
 
   test('ファイルからReadmeを作成する', () => {
     const readmeFile = `# Title
@@ -16,7 +16,7 @@ text text text text
 
 text text text text`;
 
-    mockReadFileSync.mockReturnValue(readmeFile);
+    readFileSyncMock.mockReturnValue(readmeFile);
 
     const actual = createReadmeFromFile();
     const expected = new Readme(
@@ -39,7 +39,7 @@ text text text text`;
     const readmeFile = `# Title
 text text text text`;
 
-    mockReadFileSync.mockReturnValue(readmeFile);
+    readFileSyncMock.mockReturnValue(readmeFile);
 
     const actual = createReadmeFromFile();
     const expected = new Readme(['# Title', 'text text text text'], {
@@ -56,7 +56,7 @@ text text text text
 
 <!-- :README-SCREENSHOT-BEGIN: -->`;
 
-    mockReadFileSync.mockReturnValue(readmeFile);
+    readFileSyncMock.mockReturnValue(readmeFile);
 
     expect(createReadmeFromFile).toThrow(new InvalidTagError());
   });
@@ -67,7 +67,7 @@ text text text text
 
 <!-- :README-SCREENSHOT-END: -->`;
 
-    mockReadFileSync.mockReturnValue(readmeFile);
+    readFileSyncMock.mockReturnValue(readmeFile);
 
     expect(createReadmeFromFile).toThrow(new InvalidTagError());
   });
@@ -79,14 +79,14 @@ text text text text
 <!-- :README-SCREENSHOT-END: -->
 <!-- :README-SCREENSHOT-BEGIN: -->`;
 
-    mockReadFileSync.mockReturnValue(readmeFile);
+    readFileSyncMock.mockReturnValue(readmeFile);
 
     expect(createReadmeFromFile).toThrow(new InvalidTagError());
   });
 });
 
 describe('Readme', () => {
-  const mockWriteFileSync = (fs as jest.Mocked<typeof fs>).writeFileSync;
+  const writeFileSyncMock = (fs as jest.Mocked<typeof fs>).writeFileSync;
 
   describe('updateScreenshots', () => {
     test('タグが元からある場合、スクリーンショットを挿入した新しいReadmeを返す', () => {
@@ -200,7 +200,7 @@ text text
 ![http://example.com](example.png)
 <!-- :README-SCREENSHOT-END: -->`;
 
-      expect(mockWriteFileSync).toHaveBeenCalledWith('README.md', expectedText);
+      expect(writeFileSyncMock).toHaveBeenCalledWith('README.md', expectedText);
     });
   });
 });
