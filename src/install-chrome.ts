@@ -14,9 +14,11 @@ export const installChrome = async () => {
     BrowserPlatform.LINUX,
     'stable',
   );
-  return await install({
+  const { executablePath } = await install({
     cacheDir: join(homedir(), '.cache', 'puppeteer'),
     browser,
     buildId,
   });
+
+  return { executablePath };
 };
