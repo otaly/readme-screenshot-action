@@ -4,10 +4,9 @@ import { Readme, createReadmeFromFile } from 'src/readme';
 
 jest.mock('node:fs');
 
-const mockReadFileSync = (fs as jest.Mocked<typeof fs>).readFileSync;
-const mockWriteFileSync = (fs as jest.Mocked<typeof fs>).writeFileSync;
-
 describe('createReadmeFromFile', () => {
+  const mockReadFileSync = (fs as jest.Mocked<typeof fs>).readFileSync;
+
   test('ファイルからReadmeを作成する', () => {
     const readmeFile = `# Title
 text text text text
@@ -87,6 +86,8 @@ text text text text
 });
 
 describe('Readme', () => {
+  const mockWriteFileSync = (fs as jest.Mocked<typeof fs>).writeFileSync;
+
   describe('updateScreenshots', () => {
     test('タグが元からある場合、スクリーンショットを挿入した新しいReadmeを返す', () => {
       const readme = new Readme(
