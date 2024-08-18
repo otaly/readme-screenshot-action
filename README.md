@@ -47,7 +47,7 @@ jobs:
       - uses: actions/checkout@v4
 
       # Take screenshot and update README
-      - uses: otaly/readme-screenshot-action@v1.0.1
+      - uses: otaly/readme-screenshot-action@v1
         with:
           urls: |
             https://developer.chrome.com/
@@ -79,7 +79,7 @@ jobs:
       - run: npm install
 
       # Take screenshot and update README
-      - uses: otaly/readme-screenshot-action@v1.0.1
+      - uses: otaly/readme-screenshot-action@v1
         with:
           urls: |
             https://localhost:5173/
